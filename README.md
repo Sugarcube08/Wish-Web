@@ -40,8 +40,8 @@ This project is a **photo slideshow** that integrates **background videos, audio
 
 ### **1️⃣ Clone the Repository:**  
 ```sh
-git clone https://github.com/your-username/your-repository.git
-cd your-repository
+git clone https://github.com/sugarcube08/Wish-Web
+cd Wish-Web
 ```
 
 ### **2️⃣ Open `index.html` in a browser**  
