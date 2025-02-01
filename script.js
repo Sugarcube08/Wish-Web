@@ -3,20 +3,50 @@ const bottomMessage = document.querySelector(".bottom-message");
 const photoRoll = document.querySelector(".photo-roll");
 const audioPlayer = new Audio();
 const backgroundVideo = document.getElementById("background-video");
+const bgm = new Audio("bgm/bgm.mp3"); // Background music
+
+bgm.loop = true;
+bgm.volume = 0.5; // Set volume to 50%
+
+// Play music when screen is tapped or clicked
+function startBGM() {
+    bgm.play().then(() => {
+        document.removeEventListener("click", startBGM); // Remove listener after music starts
+        document.removeEventListener("touchstart", startBGM);
+    }).catch(err => console.error("Error playing background music:", err));
+}
+
+// Wait for user interaction to start music
+document.addEventListener("click", startBGM);
+document.addEventListener("touchstart", startBGM);
 
 let images = [];
 let messages = [];
 let audios = [];
 let bgVideos = [];
 
-// Fetch images dynamically from assets folder
+// Dynamically detect and preload images, audios, and videos from respective folders
 function preloadImages() {
-    const imageCount = 4; // Adjust based on actual number of images
-    for (let i = 1; i <= imageCount; i++) {
-        images.push(`images/photo${i}.jpg`);
-        audios.push(`audios/audio${i}.mp3`);
-        bgVideos.push(`bgv/bgv${i}.mp4`);
-    }
+    fetch("images/")
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, "text/html");
+            const imgElements = [...doc.querySelectorAll("a")];
+
+            imgElements.forEach(link => {
+                const href = link.getAttribute("href");
+                if (href.match(/\.(jpg|jpeg|png|gif)$/i)) {
+                    images.push(`images/${href}`);
+                    const index = images.length;
+                    audios.push(`audios/audio${index}.mp3`);
+                    bgVideos.push(`bgv/bgv${index}.mp4`);
+                }
+            });
+
+            if (images.length > 0) updateSlideshow();
+        })
+        .catch(err => console.error("Error loading images:", err));
 }
 
 // Fetch messages from messages.txt
@@ -24,7 +54,6 @@ fetch("messages.txt")
     .then(response => response.text())
     .then(data => {
         messages = data.split("\n");
-        updateSlideshow();
     })
     .catch(err => console.error("Error loading messages:", err));
 
@@ -45,9 +74,9 @@ function updateSlideshow() {
     const photos = document.querySelectorAll(".photo");
 
     // Set images
-    photos[0].src = images[prevIndex];
-    photos[1].src = images[currentIndex];
-    photos[2].src = images[nextIndex];
+    photos[0].src = images[prevIndex] || "";
+    photos[1].src = images[currentIndex] || "";
+    photos[2].src = images[nextIndex] || "";
 
     // Reset classes to maintain 3-card view
     photos[0].className = "photo previous";
