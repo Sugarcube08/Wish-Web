@@ -25,29 +25,19 @@ let messages = [];
 let audios = [];
 let bgVideos = [];
 
-// Dynamically detect and preload images, audios, and videos from respective folders
-function preloadImages() {
-    fetch("images/")
-        .then(response => response.text())
-        .then(data => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data, "text/html");
-            const imgElements = [...doc.querySelectorAll("a")];
+// Fetch media.json file
+fetch("media.json")
+    .then(response => response.json())
+    .then(data => {
+        data.forEach((item, index) => {
+            images.push(item.image);
+            audios.push(item.audio);
+            bgVideos.push(item.video);
+        });
 
-            imgElements.forEach(link => {
-                const href = link.getAttribute("href");
-                if (href.match(/\.(jpg|jpeg|png|gif)$/i)) {
-                    images.push(`images/${href}`);
-                    const index = images.length;
-                    audios.push(`audios/audio${index}.mp3`);
-                    bgVideos.push(`bgv/bgv${index}.mp4`);
-                }
-            });
-
-            if (images.length > 0) updateSlideshow();
-        })
-        .catch(err => console.error("Error loading images:", err));
-}
+        if (images.length > 0) updateSlideshow();
+    })
+    .catch(err => console.error("Error loading media.json:", err));
 
 // Fetch messages from messages.txt
 fetch("messages.txt")
@@ -164,4 +154,3 @@ function slide(direction) {
 
 // Preload images, audio, and videos
 preloadAudio();
-preloadImages();

@@ -12,7 +12,7 @@ This project implements a dynamic photo slideshow with background video and musi
 
 ## How It Works 🛠️
 - The slideshow consists of three images at a time: the current image in the center, a previous image to the left, and the next image to the right.
-- The images are fetched dynamically from a specified directory (`images/`), and they are displayed along with associated audio and background video.
+- The images, audios, and background videos are preloaded in sequence based on the `media.json` file.
 - The background video plays in a loop and fades in/out when transitioning between images.
 - The slideshow progresses automatically based on the audio associated with each image, or users can manually navigate the slideshow via swipes or clicks.
 
@@ -29,6 +29,7 @@ This project implements a dynamic photo slideshow with background video and musi
 - **`audios/`**: Directory containing the audio files (optional, associated with each image).
 - **`bgv/`**: Directory containing background videos (optional, associated with each image).
 - **`messages.txt`**: Text file containing the messages that appear at the bottom of the screen.
+- **`media.json`**: New JSON file that manages the sequential media (images, audios, videos) and their order in the slideshow.
 
 ## Installation & Usage 💻
 
@@ -42,15 +43,43 @@ This project implements a dynamic photo slideshow with background video and musi
 4. The slideshow will automatically start with background music, and the images will transition based on the audio track associated with each image.
 
 ## Customization ✨
-- To change the appearance of the slideshow, edit the `styles.css` file. 🎨
-- To update the images, audio, and background videos, simply replace the files in the `images/`, `audios/`, and `bgv/` folders.
-- Modify the `messages.txt` file to update or add messages that appear at the bottom of the screen.
-- Update the `bgm/bgm.mp3` file if you want to change the background music.
+- **Update the `media.json` file**: This is the new configuration file that defines the sequence of media items in the slideshow. Each entry contains the paths to the image, audio, and background video:
+    ```json
+    [
+        {
+            "image": "images/photo1.jpg",
+            "audio": "audios/audio1.mp3",
+            "video": "bgv/video1.mp4"
+        },
+        {
+            "image": "images/photo2.jpg",
+            "audio": "audios/audio2.mp3",
+            "video": "bgv/video2.mp4"
+        }
+    ]
+    ```
+    - Update the paths with your media files and ensure the sequence matches your intended order.
+  
+- **Update the `messages.txt` file**: Each line in this file corresponds to a message that will appear with the respective image/audio/video:
+    ```
+    This is photo 1
+    This is photo 2
+    ...
+    ```
+
+- **CSS Customization**: To change the appearance of the slideshow, edit the `styles.css` file. 🎨
+- **Replace Media Files**: To update the images, audio, and background videos, simply replace the files in the `images/`, `audios/`, and `bgv/` folders.
+- **Background Music**: Update the `bgm/bgm.mp3` file to change the background music.
 
 ## Technologies Used 🛠️
 - **HTML**: For the structure and layout of the page.
 - **CSS**: For styling the page, including transitions, animations, and responsiveness.
 - **JavaScript**: For handling the slideshow functionality, media preloading, user interactions, and synchronization of images, audio, and video.
+
+## Cautions ⚠️
+- **Media Files**: Ensure that the media files in `media.json` are correctly named and the paths are accurate.
+- **Message Synchronization**: Each line in `messages.txt` corresponds to a media entry in `media.json`. Ensure the number of lines in `messages.txt` matches the number of entries in `media.json`.
+- **Folder Structure**: Maintain the proper folder structure (images, audios, bgv) to ensure the correct file paths.
 
 ## License 📝
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
