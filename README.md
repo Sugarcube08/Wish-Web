@@ -88,3 +88,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - The slideshow and video functionality rely on the HTML5 `video` and `audio` elements.
 - Background music and audio synchronization are powered by JavaScript's `Audio` API.
 - The project uses the `prefers-color-scheme` media query to support both light and dark modes.
+
+
+---                                         #Made with ❤️ by SugarCube                   ---
+---
+## ☕ Support Me
+If you like this project, consider buying me
+ a coffee!
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support%20Me-orange?style=flat-square&logo=buy-me-a-coffee)](https://www.buymeacoffee.com/sugarcube08)   ---
