@@ -90,7 +90,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - The project uses the `prefers-color-scheme` media query to support both light and dark modes.
 
 
----                                         #Made with ❤️ by SugarCube                   ---
+---
+## Made with ❤️ by SugarCube
 ---
 ## ☕ Support Me
 If you like this project, consider buying me
